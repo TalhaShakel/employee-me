@@ -45,7 +45,7 @@ class _profileState extends State<profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[100],
+      // backgroundColor: Colors.blue[100],
       appBar: AppBar(
         title: Text(
           "Profile",
@@ -80,7 +80,7 @@ class profilw_data extends StatelessWidget {
       padding: EdgeInsets.only(top: 4.0),
       child: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            // color: Colors.white,
             borderRadius: BorderRadius.circular(5),
           ),
           height: 70,

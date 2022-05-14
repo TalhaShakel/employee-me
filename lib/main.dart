@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:job_portal/Empolyer/emp_sign.dart';
 import 'package:job_portal/Job%20Applicant/job_login.dart';
+import 'package:job_portal/widgets/button.dart';
 import 'package:job_portal/widgets/crud.dart';
+import 'package:job_portal/widgets/heading.dart';
 
 import 'Empolyer/emp_log.dart';
 
@@ -19,6 +21,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      theme: ThemeData(
+          // textButtonTheme: ,
+          buttonColor: Colors.blue,
+          brightness: Brightness.dark,
+          primarySwatch: Colors.blueGrey),
+      themeMode: ThemeMode.dark,
       debugShowCheckedModeBanner: false,
       home: welcome(),
     );
@@ -31,25 +39,42 @@ class welcome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Colors.orange,
       appBar: AppBar(),
       body: Container(
         child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton(
-                  onPressed: () {
-                    Get.to(job_Log());
-                  },
-                  style: ElevatedButton.styleFrom(minimumSize: Size(100, 40)),
-                  child: Text("Job Applicant")),
-              ElevatedButton(
-                onPressed: () {
-                  Get.to(Empolyer_Log());
-                },
-                style: ElevatedButton.styleFrom(minimumSize: Size(100, 40)),
-                child: Text("Empolyer"),
-              )
+              Padding(
+                padding: const EdgeInsets.only(bottom: 58.0),
+                child: h1(head: "Employee me"),
+              ),
+              SizedBox(
+                height: 100,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  // h1(head: "head"),
+                  button(
+                      onPressed: () {
+                        Get.to(job_Log());
+                      },
+                      // style: ElevatedButton.styleFrom(minimumSize: Size(100, 40)),
+                      height: 40.0,
+                      width: 150.0,
+                      text: ("Job Applicant")),
+                  button(
+                    onPressed: () {
+                      Get.to(Empolyer_Log());
+                    },
+                    height: 40.0,
+                    width: 150.0,
+                    text: ("Empolyer"),
+                  )
+                ],
+              ),
             ],
           ),
         ),

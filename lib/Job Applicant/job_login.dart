@@ -45,7 +45,9 @@ class job_Log extends StatelessWidget {
     }
 
     return Scaffold(
+      // backgroundColor: Colors.blueGrey[800],
       appBar: AppBar(
+        // backgroundColor: Colors.blueGrey[600],
         title: Text("LOGIN"),
       ),
       body: Form(

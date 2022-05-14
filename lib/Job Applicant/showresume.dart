@@ -5,56 +5,21 @@ import 'package:job_portal/Job%20Applicant/profile.dart';
 import 'package:job_portal/Job%20Applicant/resume_Upload.dart';
 import 'package:job_portal/Job%20Applicant/showresume.dart';
 
-class job_Home extends StatelessWidget {
-  const job_Home({Key? key}) : super(key: key);
+class applied extends StatelessWidget {
+  const applied({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Job Applicant"),
-        actions: [
-          IconButton(
-              enableFeedback: false,
-              onPressed: () {
-                Get.to(profile());
-              },
-              icon: Icon(
-                Icons.person,
-                color: Colors.white,
-                size: 35,
-              )),
-        ],
+        title: Text("Applied Jobs"),
       ),
-      body: Column(
-        children: [
-          view_job(),
-          ElevatedButton(
-              onPressed: () {
-                Get.to(applied());
-              },
-              child: Text("View post job"))
-        ],
-      ),
-    );
-  }
-}
-
-class view_job extends StatelessWidget {
-  const view_job({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.8,
-      child: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('posted-job').snapshots(),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection('resume').snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
-                itemCount: snapshot.data!. docs.length,
+                itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
                   DocumentSnapshot doc = snapshot.data!.docs[index];
                   return Column(
@@ -67,8 +32,11 @@ class view_job extends StatelessWidget {
                           elevation: 10,
                           child: ListTile(
                             title: Text(doc['name']),
-                            subtitle: Text(doc['qual']),
-                            trailing: Text(doc['date']),
+                            subtitle: Text(doc['coverletter']),
+                            trailing: Padding(
+                              padding: const EdgeInsets.only(left: 18.0),
+                              child: Text(doc['email']),
+                            ),
                           ),
                         ),
                       ),

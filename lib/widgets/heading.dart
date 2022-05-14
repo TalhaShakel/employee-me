@@ -10,7 +10,12 @@ class h1 extends StatelessWidget {
     return Text(
       head,
       style: TextStyle(
-          fontSize: 30, fontWeight: FontWeight.bold, letterSpacing: 2),
+          // decorationColor: Colors.white,
+          // backgroundColor: Colors.blueGrey[100],
+          color: Colors.white,
+          fontSize: 30,
+          fontWeight: FontWeight.bold,
+          letterSpacing: 2),
     );
   }
 }

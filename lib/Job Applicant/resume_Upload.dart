@@ -24,7 +24,7 @@ class resume extends StatelessWidget {
     String uid = await FirebaseAuth.instance.currentUser!.uid;
 
     try {
-      await db.collection("Users").add(
+      await db.collection("resume").add(
           {"name": name.text, "email": email.text, "coverletter": cover.text});
       print("User is register");
     } catch (e) {

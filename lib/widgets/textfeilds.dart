@@ -22,7 +22,7 @@ class textfeild extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       width: size.width * 0.8,
       decoration: BoxDecoration(
-        color: Colors.blue[50],
+        // color: Colors.blue[100],
         borderRadius: BorderRadius.circular(29),
       ),
       child: TextFormField(
@@ -98,7 +98,7 @@ class jobfiels2 extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       width: size.width * 0.8,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.blue,
         borderRadius: BorderRadius.circular(29),
       ),
       child: TextFormField(
