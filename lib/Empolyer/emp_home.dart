@@ -69,18 +69,39 @@ class post_A_job extends StatelessWidget {
 
   TextEditingController Job_Address = TextEditingController();
   userStore() async {
+    var auth = FirebaseAuth.instance.currentUser?.uid;
     FirebaseFirestore db = FirebaseFirestore.instance;
     String uid = await FirebaseAuth.instance.currentUser!.uid;
 
     try {
       await db.collection("posted-job").add({
+        "uid": auth.toString(),
         "name": Job_Name.text,
+        "Job_Salary": Job_Salary.text,
+        "Job_Experience": Job_Experience.text,
+        "Job_Address": Job_Address.text,
         "date": DateTime.now().toString(),
         "qual": Job_Qualification.text
       });
+      Fluttertoast.showToast(
+          msg: "require job is posted",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 6,
+          backgroundColor: Colors.blue,
+          textColor: Colors.white,
+          fontSize: 16.0);
       print("User is register");
     } catch (e) {
       print("ERROR");
+      Fluttertoast.showToast(
+          msg: "$e",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 6,
+          backgroundColor: Colors.blue,
+          textColor: Colors.white,
+          fontSize: 16.0);
     }
   }
 
@@ -91,7 +112,7 @@ class post_A_job extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey[50],
+      // backgroundColor: Colors.blueGrey[50],
       appBar: AppBar(
         title: Text("Post A Job"),
       ),
