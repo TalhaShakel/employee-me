@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:job_portal/Empolyer/test.dart';
+import 'package:job_portal/Job%20Applicant/test.dart';
 import 'package:job_portal/widgets/textfeilds.dart';
 
 class edit_posted_job extends StatelessWidget {

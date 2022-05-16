@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:job_portal/Empolyer/edit_posted_job.dart';
 import 'package:job_portal/Job%20Applicant/profile.dart';
+import 'package:job_portal/Job%20Applicant/test.dart';
 import 'package:job_portal/widgets/heading.dart';
 
 class postedjob extends StatelessWidget {
@@ -88,6 +89,16 @@ class postedjob extends StatelessWidget {
                                             "QUALIFICATION \t\t\t\t${doc?['qual']}"),
                                         Text(
                                             "DATE \t\t\t\t\t\t${doc?['date']}"),
+                                        Center(
+                                          child: ElevatedButton(
+                                              onPressed: () {
+                                                Get.to(kaadu(
+                                                  id: doc?.reference.id,
+                                                ));
+                                              },
+                                              child:
+                                                  Text("View People Resumes")),
+                                        )
                                       ],
                                     ),
                                   ),

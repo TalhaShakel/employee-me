@@ -24,7 +24,26 @@ class resume extends StatelessWidget {
     String uid = await FirebaseAuth.instance.currentUser!.uid;
 
     try {
-      await db.collection("resume").add(
+      await db.collection("resume").add({
+        "name": name.text,
+        "email": email.text,
+        "coverletter": cover.text,
+        "uid": uid
+      });
+      print("User is register");
+    } catch (e) {
+      print("ERROR");
+    }
+  }
+
+  String? id;
+  resume({Key? key, this.id}) : super(key: key);
+  userStore2() async {
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    String uid = await FirebaseAuth.instance.currentUser!.uid;
+
+    try {
+      await db.collection("posted-job").doc(id).collection("apply").add(
           {"name": name.text, "email": email.text, "coverletter": cover.text});
       print("User is register");
     } catch (e) {
@@ -32,7 +51,6 @@ class resume extends StatelessWidget {
     }
   }
 
-  resume({Key? key}) : super(key: key);
   filepick() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result != null) {
@@ -108,17 +126,17 @@ class resume extends StatelessWidget {
                   },
                   height: 40.0,
                   width: 150.0,
-                  text: "Slect resume"),
+                  text: "Upload file"),
               SizedBox(
                 height: 10,
               ),
               button(
                   onPressed: () async {
+                    await userStore2();
                     await userStore();
-                    // if (_formKey.currentState!.validate()) {
-                    //   Get.to(job_Home()
-                    //   );
-                    // }
+                    if (_formKey.currentState!.validate()) {
+                      Get.to(job_Home());
+                    }
                     Fluttertoast.showToast(
                         msg: "JOb is post",
                         toastLength: Toast.LENGTH_SHORT,
