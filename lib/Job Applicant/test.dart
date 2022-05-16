@@ -21,6 +21,9 @@ class kaadu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: Text("View people resume"),
+        ),
         body: SafeArea(
             child: StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance
@@ -42,9 +45,13 @@ class kaadu extends StatelessWidget {
                               child: Card(
                                 elevation: 10,
                                 child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     h1(head: "${doc?["name"]}"),
-                                    h1(head: "${doc?["email"]}"),
+                                    Text(
+                                      "${doc?["email"]}",
+                                      style: TextStyle(fontSize: 21),
+                                    ),
                                     Text("${doc?["coverletter"]}")
                                   ],
                                 ),

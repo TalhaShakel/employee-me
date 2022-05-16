@@ -2,21 +2,35 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:job_portal/Job%20Applicant/job_home.dart';
 import 'package:job_portal/Job%20Applicant/profile.dart';
 import 'package:job_portal/widgets/button.dart';
-import 'package:job_portal/widgets/heading.dart';
 import 'package:job_portal/widgets/textfeilds.dart';
 import 'package:file_picker/file_picker.dart';
 
-class resume extends StatelessWidget {
+class resume extends StatefulWidget {
+  String? id;
+  resume({Key? key, this.id}) : super(key: key);
+
+  @override
+  State<resume> createState() => _resumeState();
+}
+
+class _resumeState extends State<resume> {
   var name = TextEditingController();
 
+  File? file;
+  // final base = basename()
+
   TextEditingController email = TextEditingController();
+
   TextEditingController cover = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
 
   userStore() async {
@@ -36,14 +50,12 @@ class resume extends StatelessWidget {
     }
   }
 
-  String? id;
-  resume({Key? key, this.id}) : super(key: key);
   userStore2() async {
     FirebaseFirestore db = FirebaseFirestore.instance;
     String uid = await FirebaseAuth.instance.currentUser!.uid;
 
     try {
-      await db.collection("posted-job").doc(id).collection("apply").add(
+      await db.collection("posted-job").doc(widget.id).collection("apply").add(
           {"name": name.text, "email": email.text, "coverletter": cover.text});
       print("User is register");
     } catch (e) {
@@ -54,8 +66,13 @@ class resume extends StatelessWidget {
   filepick() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result != null) {
-      File file = File(result.files.single.path.toString());
-      print(file.toString());
+      setState(() {
+        file = File(result.files.single.path.toString());
+      });
+      print("fileeee" + file.toString());
+
+      // Storage.FirebaseStorage _storage = await Storage.FirebaseStorage.instance;
+      // final reference = await _storage.ref("pdf/${file?.path}").putFile(file!);
     } else {
       print("User canceled the picker");
     }
@@ -123,10 +140,13 @@ class resume extends StatelessWidget {
               button(
                   onPressed: () {
                     filepick();
+                    
+                    // uploadFile(file);
                   },
                   height: 40.0,
                   width: 150.0,
                   text: "Upload file"),
+              Text(file != null ? "File is selected" : "FIle is not selected"),
               SizedBox(
                 height: 10,
               ),

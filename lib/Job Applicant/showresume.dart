@@ -42,7 +42,7 @@ class applied extends StatelessWidget {
                                   subtitle: Text(doc?['coverletter']),
                                   trailing: Padding(
                                     padding: const EdgeInsets.only(left: 18.0),
-                                    child: Text(doc!['email']),
+                                    child: Text(doc?['email']),
                                   ),
                                 ),
                               ),
