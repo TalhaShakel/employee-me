@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:job_portal/widgets/heading.dart';
 import 'package:job_portal/widgets/textfeilds.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class kaadu extends StatelessWidget {
   var id;
@@ -74,6 +75,19 @@ class kaadu extends StatelessWidget {
                                                   label: Text("coverletter")),
                                               controller: description,
                                             ),
+                                            ElevatedButton(
+                                                onPressed: () async {
+                                                  print(doc?["resumeurl"]);
+                                                  final Uri _url = Uri.parse(
+                                                      doc?["resumeurl"]);
+                                                  // var _url =
+                                                  //     "$doc?['resumeurl']";
+                                                  if (await canLaunchUrl(
+                                                      _url)) {
+                                                    await launchUrl(_url);
+                                                  }
+                                                },
+                                                child: Text("Download resume"))
                                           ],
                                         ),
                                       ));

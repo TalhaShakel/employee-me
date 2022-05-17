@@ -24,7 +24,7 @@ class resume extends StatefulWidget {
 class _resumeState extends State<resume> {
   var name = TextEditingController();
 
-  File? file;
+  // File? file;
   // final base = basename()
 
   TextEditingController email = TextEditingController();
@@ -50,32 +50,50 @@ class _resumeState extends State<resume> {
     }
   }
 
+  var urldow;
   userStore2() async {
     FirebaseFirestore db = FirebaseFirestore.instance;
     String uid = await FirebaseAuth.instance.currentUser!.uid;
 
     try {
-      await db.collection("posted-job").doc(widget.id).collection("apply").add(
-          {"name": name.text, "email": email.text, "coverletter": cover.text});
+      await db.collection("posted-job").doc(widget.id).collection("apply").add({
+        "name": name.text,
+        "email": email.text,
+        "coverletter": cover.text,
+        "resumeurl": urldow.toString()
+      });
       print("User is register");
     } catch (e) {
       print("ERROR");
     }
   }
 
+  PlatformFile? _platformFile;
+  UploadTask? _uploadTask;
   filepick() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result != null) {
       setState(() {
-        file = File(result.files.single.path.toString());
+        // file = File(result.files.single.path.toString());
+        _platformFile = result.files.first;
       });
-      print("fileeee" + file.toString());
+      print("fileeee" + _platformFile.toString());
 
       // Storage.FirebaseStorage _storage = await Storage.FirebaseStorage.instance;
       // final reference = await _storage.ref("pdf/${file?.path}").putFile(file!);
     } else {
       print("User canceled the picker");
     }
+  }
+
+  upload() async {
+    final path = "file/${_platformFile!.name}";
+    final file1 = File(_platformFile!.path!);
+    final ref = FirebaseStorage.instance.ref().child(path);
+    _uploadTask = ref.putFile(file1);
+    final snap = await _uploadTask!.whenComplete(() => null);
+    urldow = await snap.ref.getDownloadURL();
+    print(urldow.toString());
   }
 
   @override
@@ -140,18 +158,22 @@ class _resumeState extends State<resume> {
               button(
                   onPressed: () {
                     filepick();
-                    
+
                     // uploadFile(file);
                   },
                   height: 40.0,
                   width: 150.0,
                   text: "Upload file"),
-              Text(file != null ? "File is selected" : "FIle is not selected"),
+              Text(_platformFile != null
+                  ? "File is selected"
+                  : "FIle is not selected"),
+              // ElevatedButton(onPressed: upload, child: Text("data")),
               SizedBox(
                 height: 10,
               ),
               button(
                   onPressed: () async {
+                    await upload();
                     await userStore2();
                     await userStore();
                     if (_formKey.currentState!.validate()) {
