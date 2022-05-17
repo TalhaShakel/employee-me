@@ -54,7 +54,7 @@ class Empolyer_Log extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            h1(head: "Empolyer"),
+            h1(head: "Employer"),
             textfeild(
                 validator: (value) {
                   if (value == null || value.isEmpty) {

@@ -1,9 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:job_portal/widgets/heading.dart';
+import 'package:job_portal/widgets/textfeilds.dart';
 
 class kaadu extends StatelessWidget {
   var id;
+
+  var name = TextEditingController();
+
+  var email = TextEditingController();
+
+  var description = TextEditingController();
   kaadu({Key? key, this.id}) : super(key: key);
 
   poka() async {
@@ -40,22 +47,58 @@ class kaadu extends StatelessWidget {
                           print(snapshot.data?.docs.length);
                           QueryDocumentSnapshot? doc =
                               snapshot.data?.docs[index];
-                          return Container(
-                              width: MediaQuery.of(context).size.width,
-                              child: Card(
-                                elevation: 10,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    h1(head: "${doc?["name"]}"),
-                                    Text(
-                                      "${doc?["email"]}",
-                                      style: TextStyle(fontSize: 21),
-                                    ),
-                                    Text("${doc?["coverletter"]}")
-                                  ],
-                                ),
-                              ));
+                          return GestureDetector(
+                            onTap: () {
+                              name.text = "${doc?["name"]}";
+                              description.text = "${doc?["name"]}";
+                              email.text = "${doc?["email"]}";
+                              showDialog(
+                                  context: context,
+                                  builder: (_) => AlertDialog(
+                                        title: Text('Resume'),
+                                        content: Column(
+                                          // shrinkWrap: true,
+                                          children: [
+                                            TextField(
+                                              decoration: InputDecoration(
+                                                  label: Text("Name")),
+                                              controller: name,
+                                            ),
+                                            TextField(
+                                              decoration: InputDecoration(
+                                                  label: Text("Email")),
+                                              controller: email,
+                                            ),
+                                            TextField(
+                                              decoration: InputDecoration(
+                                                  label: Text("coverletter")),
+                                              controller: description,
+                                            ),
+                                          ],
+                                        ),
+                                      ));
+                            },
+                            child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                child: Card(
+                                  elevation: 10,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      h1(head: "Name:  ${doc?["name"]}"),
+                                      Text(
+                                        "Email: ${doc?["email"]}",
+                                        style: TextStyle(fontSize: 21),
+                                      ),
+                                      Text(
+                                        "description: ${doc?["coverletter"]}",
+                                        style: TextStyle(fontSize: 21),
+                                      )
+                                    ],
+                                  ),
+                                )),
+                          );
                         });
                   } else {
                     return Text("data");
