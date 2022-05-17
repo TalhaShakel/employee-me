@@ -49,7 +49,7 @@ class welcome extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(bottom: 58.0),
-                child: h1(head: "Employee me"),
+                child: h1(head: "Employ me"),
               ),
               SizedBox(
                 height: 100,
